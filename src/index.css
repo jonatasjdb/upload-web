@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@property --border-angle {
+	inherits: false;
+	initial-value: 0deg;
+	syntax: "<angle>";
+}
+
 @theme {
 	--shadow-shape:
 		0px 8px 8px rgba(0, 0, 0, 0.1),
@@ -13,6 +19,18 @@
 		0px 0px 0px 1px rgba(0, 0, 0, 0.25),
 		inset 0px 1px 0px rgba(255, 255, 255, 0.02),
 		inset 0px 0px 0px 1px rgba(255, 255, 255, 0.02);
+
+	@keyframes border {
+		to {
+			--border-angle: 360deg;
+		}
+	}
+
+	--animation-border: border 2s linear infinite;
+}
+
+@utility animate-border {
+	animation: var(--animation-border);
 }
 
 @layer base {
