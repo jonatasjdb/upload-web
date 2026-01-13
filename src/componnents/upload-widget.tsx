@@ -7,7 +7,7 @@ import { UploadWidgetHeader } from "./upload-widget-header";
 import { UploadWidgetUploadList } from "./upload-widget-upload-list";
 
 export function UploadWidget() {
-	const { isThereAnyPendingUploads, globalPercentage } = usePendingUploads();
+	const { isThereAnyPendingUploads } = usePendingUploads();
 
 	const [isWidgetOpen, toogleWidgetOpen] = useCycle(false, true);
 	return (
