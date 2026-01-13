@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
-@property --border-angle {
-	inherits: false;
-	initial-value: 0deg;
-	syntax: "<angle>";
-}
+/* =============================
+   Tailwind 4 - Custom Theme & Utilities
+   ============================= */
 
+/* -----------------------------
+   Theme Variables
+----------------------------- */
 @theme {
 	--shadow-shape:
 		0px 8px 8px rgba(0, 0, 0, 0.1),
@@ -20,21 +21,67 @@
 		inset 0px 1px 0px rgba(255, 255, 255, 0.02),
 		inset 0px 0px 0px 1px rgba(255, 255, 255, 0.02);
 
-	@keyframes border {
-		to {
-			--border-angle: 360deg;
-		}
-	}
+	--opacity-2: 0.02;
+	--font-xxs: 0.625rem;
+	--font-sans:
+		"Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+		Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-	--animation-border: border 2s linear infinite;
+	--border-angle: 0deg;
+	--animation-border: rotate-border 2s linear infinite;
 }
 
+/* -----------------------------
+   Custom Property for Animation
+----------------------------- */
+@property --border-angle {
+	inherits: false;
+	initial-value: 0deg;
+	syntax: "<angle>";
+}
+
+/* -----------------------------
+   Keyframes for Border Rotation
+----------------------------- */
+@keyframes rotate-border {
+	to {
+		--border-angle: 360deg;
+	}
+}
+
+/* -----------------------------
+   Utilities
+----------------------------- */
 @utility animate-border {
 	animation: var(--animation-border);
 }
 
+@utility shadow-shape {
+	box-shadow: var(--shadow-shape);
+}
+
+@utility shadow-shape-content {
+	box-shadow: var(--shadow-shape-content);
+}
+
+@utility opacity-2 {
+	opacity: var(--opacity-2);
+}
+
+@utility font-xxs {
+	font-size: var(--font-xxs);
+}
+
+@utility font-sans {
+	font-family: var(--font-sans);
+}
+
+/* -----------------------------
+   Base Layer
+----------------------------- */
 @layer base {
 	body {
-		@apply text-white;
+		@apply text-white font-sans;
 	}
 }

@@ -1,7 +1,7 @@
 import * as Progress from "@radix-ui/react-progress";
 import { Download, ImageUp, Link2, RefreshCcw, X } from "lucide-react";
 import { motion } from "motion/react";
-import { type Upload, useUploads } from "../store/uploads";
+import { type Upload, usePendingUploads, useUploads } from "../store/uploads";
 import { formatBytes } from "../utils/format-bytes";
 import { Button } from "./ui/button";
 
@@ -14,11 +14,7 @@ export function UploadWidgetUploadItem({
 	uploadId,
 }: UploadWidgetUploadItemProps) {
 	const cancellUpload = useUploads((store) => store.cancelUploads);
-
-	const progress = Math.min(
-		(upload.uploadSizeInBytes * 100) / upload.originalSizeInBytes,
-		100,
-	);
+	const { globalPercentage } = usePendingUploads();
 
 	return (
 		<motion.div
@@ -42,7 +38,7 @@ export function UploadWidgetUploadItem({
 					</span>
 					<div className="size-1 rounded-full bg-zinc-700" />
 					{upload.status === "success" && <span></span>}
-					{upload.status === "progress" && <span>{progress}</span>}
+					{upload.status === "progress" && <span>{globalPercentage}%</span>}
 					{upload.status === "error" && (
 						<span className="text-red-400">Error</span>
 					)}
@@ -59,7 +55,8 @@ export function UploadWidgetUploadItem({
 				<Progress.Indicator
 					className="bg-indigo-500 h-1 group-data-[status=success]:bg-green-400 group-data-[status=error]:bg-red-400 group-data-[status=canceled]:bg-amber-500 transition-all"
 					style={{
-						width: upload.status === "progress" ? `${progress}%` : "100%",
+						width:
+							upload.status === "progress" ? `${globalPercentage}%` : "100%",
 					}}
 				/>
 			</Progress.Root>
